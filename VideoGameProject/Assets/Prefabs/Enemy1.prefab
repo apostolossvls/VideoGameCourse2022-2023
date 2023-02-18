@@ -869,7 +869,7 @@ MonoBehaviour:
   - {fileID: 4988321487290387957, guid: 3f25f5221fbd1f640a8622fabc63332b, type: 3}
   - {fileID: 4988321487290387957, guid: 3f25f5221fbd1f640a8622fabc63332b, type: 3}
   - {fileID: 4988321487290387957, guid: 3f25f5221fbd1f640a8622fabc63332b, type: 3}
-  force: 100
+  lootExplotionForce: 3
 --- !u!1 &5626368487702741746
 GameObject:
   m_ObjectHideFlags: 0

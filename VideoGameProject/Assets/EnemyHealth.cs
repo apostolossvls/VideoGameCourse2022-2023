@@ -9,7 +9,7 @@ public class EnemyHealth : Health
     public Slider healthBar;
     public Animator animator;
     public GameObject[] loots;
-    public float force;
+    public float lootExplotionForce = 4f;
 
     protected override void Start()
     {
@@ -59,8 +59,7 @@ public class EnemyHealth : Health
             Destroy(collider);
         }
 
-
-        Destroy(GetComponentInChildren<Canvas>());
+        Destroy(GetComponentInChildren<Canvas>().gameObject);
         //Destroy(gameObject);
     }
 
@@ -68,8 +67,15 @@ public class EnemyHealth : Health
     {
         foreach (GameObject item in loots)
         {
-            Instantiate(item, transform.position, transform.rotation);
-            GetComponent<Rigidbody>().AddExplosionForce(force, transform.position, 4f);
+            Quaternion randomRot = Quaternion.Euler(Random.Range(0f, 360f), Random.Range(0f, 360f), Random.Range(0f, 360f));
+            GameObject clone = Instantiate(item, transform.position, randomRot);
+
+            Vector3 randomExplosionPos = clone.transform.position;
+            randomExplosionPos.x += Random.Range(-0.01f, 0.01f);
+            randomExplosionPos.y += Random.Range(-0.02f, -0.01f);
+            randomExplosionPos.z += Random.Range(-0.01f, 0.01f);
+
+            clone.GetComponent<Rigidbody>().AddExplosionForce(lootExplotionForce, randomExplosionPos, lootExplotionForce, 0f, ForceMode.Impulse);
         }
     }
 }

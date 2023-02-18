@@ -5,16 +5,16 @@ using UnityEngine;
 public class Fireball : MonoBehaviour
 {
     public float damage = 200f;
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player")) return;
+        if (other.gameObject.CompareTag("Player")) return;
 
-        Health health = collision.gameObject.GetComponent<Health>();
+        Health health = other.gameObject.GetComponent<Health>();
         if (health != null)
         {
             health.TakeDamage(damage);
 
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }
