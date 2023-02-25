@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class Spawner : MonoBehaviour
@@ -27,10 +28,7 @@ public class Spawner : MonoBehaviour
         activeEnemies++;
         totalEnemiesSpawned++;
 
-        GameObject clone = Instantiate(enemyPrefab);
-
-        //POSITION
-        clone.transform.position = RandomSpawnPosition();
+        GameObject clone = GameObject.Instantiate(enemyPrefab, transform.position +  RandomSpawnLocalPosition(), transform.rotation);
 
         EnemyHealth enemyHealth = clone.GetComponent<EnemyHealth>();
         if (enemyHealth != null)
@@ -48,21 +46,21 @@ public class Spawner : MonoBehaviour
     {
         activeEnemies--;
 
-        if (totalEnemiesSpawned <= enemiesToSpawn)
+        if (totalEnemiesSpawned < enemiesToSpawn)
         {
             SpawnEnemy();
         }
-        else
+        else if (activeEnemies <= 0)
         {
             onSpawnerEnd.Invoke();
         }
     }
 
-    Vector3 RandomSpawnPosition()
+    Vector3 RandomSpawnLocalPosition()
     {
-        float x = Random.Range(transform.position.x - originRandomOffset, transform.position.x + originRandomOffset);
-        float z = Random.Range(transform.position.z - originRandomOffset, transform.position.z + originRandomOffset);
+        float x = Random.Range(-originRandomOffset, originRandomOffset);
+        float z = Random.Range(-originRandomOffset, originRandomOffset);
 
-        return new Vector3(x, transform.position.y, z);
+        return new Vector3(x, 0, z);
     }
 }

@@ -11,6 +11,8 @@ public class Shooter : MonoBehaviour
     float cooldownTimer;
     int timeShoot;
 
+    public Vector3 projectileGlobalScale = new Vector3(1f, 1f, 1f);
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +47,7 @@ public class Shooter : MonoBehaviour
         clone.SetActive(true);
         //clone.transform.localPosition = new Vector3(0,0,0);
         clone.transform.parent = null;
+        clone.transform.localScale = projectileGlobalScale;
         //clone.transform.position = transform.position; //100,0,0
         Destroy(clone, 5f);
 
